@@ -83,6 +83,12 @@ type chainType = {
     s?: number
 }
 
+notes.forEach(x => { if(!x.customData) x.customData = {} })
+walls.forEach(x => { if(!x.customData) x.customData = {} })
+bombs.forEach(x => { if(!x.customData) x.customData = {} })
+arcs.forEach(x => { if(!x.customData) x.customData = {} })
+chains.forEach(x => { if(!x.customData) x.customData = {} })
+
 
 function notesBetween(time: number, timeEnd: number, forNote: (x: noteType) => void) {
     notes.forEach(x => {
