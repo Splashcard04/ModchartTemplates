@@ -11,7 +11,7 @@ const OUTPUT = 'ExpertPlusStandard.dat'
 
 const diff = JSON.parse(Deno.readTextFileSync(INPUT))
 
-diff.customData = { environent: [], fakeColorNotes: [], fakeObstacles: [], fakeBombNotes: [], fakeBurstSliders: [], materials: {} }
+diff.customData = { environent: [], fakeColorNotes: [], fakeObstacles: [], fakeBombNotes: [], fakeBurstSliders: [], materials: {}, pointDefinitions: {}, customEvents: [] }
 
 const notes = diff.colorNotes;
 const walls = diff.obstacles;
@@ -26,6 +26,66 @@ const fakeBombs = diff.customData.fakeBombNotes;
 const fakeChains = diff.customData.fakeBurstSliders;
 const materials = diff.customData.materials;
 
+type EaseBase<T extends string> = `easeIn${T}` | `easeOut${T}` | `easeInOut${T}`;
+
+type Ease =
+    "easeLinear" |
+    "easeStep" |
+    EaseBase<"Quad"> |
+    EaseBase<"Cubic"> |
+    EaseBase<"Quart"> |
+    EaseBase<"Quint"> |
+    EaseBase<"Sine"> |
+    EaseBase<"Expo"> |
+    EaseBase<"Circ"> |
+    EaseBase<"Elastic"> |
+    EaseBase<"Back"> |
+    EaseBase<"Bounce">
+
+type Spline = "splineCatmullRom"
+
+
+type Vec3Anim = [number, number, number, number, Ease?][]
+type Vec1Anim = [number, number, Ease?][]
+type vec5Anim = [number, number, number, number, number, Ease?][]
+
+type customDataType = {
+    coordinates?: [],
+    worldRotation?: [],
+    size?: [],
+    uninteractable?: [],
+    localRotation?: [],
+    noteJumpMovementSpeed?: number,
+    noteJumtStartBeatOffset?: number,
+    color?: [],
+    spawnEffect?: boolean,
+    flip?: boolean,
+    disableNoteGravity?: boolean,
+    disableNoteLook?: boolean,
+    lightID?: number,
+    lightType?: number,
+    easing?: string,
+    lockRotation?: boolean,
+    speed?: number,
+    rotation?: number,
+    nameFilter?: number,
+    step?: number,
+    prop?: number,
+    direction?: number,
+    track?: string,
+    animation?: {
+        color?: vec5Anim,
+        dissolve?: Vec1Anim,
+        position?: Vec3Anim,
+        definitePosition?: Vec3Anim,
+        size?: Vec3Anim,
+        scale?: Vec3Anim,
+        offsetPosition?: Vec3Anim,
+        localRotation?: Vec3Anim,
+        dissolveArrow?: Vec1Anim
+    }
+}
+
 
 type noteType = {
     b?: number,
@@ -34,7 +94,7 @@ type noteType = {
     c?: number,
     d?: number,
     a?: number,
-    customData?: {}
+    customData?: customDataType
 }
 
 type notePushType = {
@@ -44,7 +104,7 @@ type notePushType = {
     c: number,
     d: number,
     a: number,
-    customData?: {}
+    customData?: customDataType
 }
 
 type wallType = {
@@ -54,7 +114,7 @@ type wallType = {
     d?: number,
     w?: number,
     h?: number,
-    customData?: {}
+    customData?: customDataType
 }
 
 type wallPushType = {
@@ -64,21 +124,21 @@ type wallPushType = {
     d: number,
     w: number,
     h: number,
-    customData?: {}
+    customData?: customDataType
 }
 
 type bombType = {
     b?: number,
     x?: number,
     y?: number,
-    customData?: {}
+    customData?: customDataType
 }
 
 type bombPushType = {
     b: number,
     x: number,
     y: number,
-    customData?: {}
+    customData?: customDataType
 }
 
 type arcType = {
@@ -94,7 +154,7 @@ type arcType = {
     tc?: number,
     tmu?: number,
     m?: number,
-    customData?: {}
+    customData?: customDataType
 }
 
 type arcPushType = {
@@ -110,7 +170,7 @@ type arcPushType = {
     tc: number,
     tmu: number,
     m: number,
-    customData?: {}
+    customData?: customDataType
 }
 
 type chainType = {
@@ -124,7 +184,7 @@ type chainType = {
     ty?: number,
     sc?: number,
     s?: number,
-    customData?: {}
+    customData?: customDataType
 }
 
 type chainPushType = {
@@ -138,7 +198,7 @@ type chainPushType = {
     ty: number,
     sc: number,
     s: number,
-    customData?: {}
+    customData?: customDataType
 }
 
 notes.forEach(x => { if(!x.customData) x.customData = {} })
