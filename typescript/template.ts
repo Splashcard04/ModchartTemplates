@@ -25,6 +25,8 @@ const fakeWalls = diff.customData.fakeObstacles;
 const fakeBombs = diff.customData.fakeBombNotes;
 const fakeChains = diff.customData.fakeBurstSliders;
 const materials = diff.customData.materials;
+const customEvents = diff.customData.customEvents;
+const pointDefinitions = diff.customData.pointDefinitions;
 
 type EaseBase<T extends string> = `easeIn${T}` | `easeOut${T}` | `easeInOut${T}`;
 
@@ -200,6 +202,28 @@ type chainPushType = {
     s: number,
     customData?: customDataType
 }
+
+type customEventType =
+    "AnimateTrack" | "AssignTrackParent" | "AssignPathAnimation"
+
+type customEventPushType = {
+    b: number,
+    t: customEventType,
+    d: {
+        duration: number,
+        color?: vec5Anim,
+        dissolve?: Vec1Anim,
+        position?: Vec3Anim,
+        definitePosition?: Vec3Anim,
+        size?: Vec3Anim,
+        scale?: Vec3Anim,
+        offsetPosition?: Vec3Anim,
+        localRotation?: Vec3Anim,
+        dissolveArrow?: Vec1Anim
+    }
+}
+
+function customEvent(json ={}) { customEvents.push(json) }
 
 notes.forEach(x => { if(!x.customData) x.customData = {} })
 walls.forEach(x => { if(!x.customData) x.customData = {} })
