@@ -212,11 +212,11 @@ function chainsBetween(time: number, timeEnd: number, forChain: (x: chainType) =
     })
 }
 
-function note(json: notePushType) { notes.push(json) }
-function wall(json: wallPushType) { walls.push(json) }
-function bomb(json: bombPushType) { bombs.push(json) }
+function note(fake: boolean, json: notePushType) { if(fake == true) { fakeNotes.push(json)} else { notes.push(json) } }
+function wall(fake: boolean, json: wallPushType) { if(fake == true) { fakeWalls.push(json)} else { walls.push(json)}}
+function bomb(fake: boolean, json: bombPushType) { if(fake == true) { fakeBombs.push(json)} else { bombs.push(json) } }
 function arc(json: arcPushType) { arcs.push(json) }
-function chain(json: chainPushType) { chains.push(json) }
+function chain(fake: boolean, json: chainPushType) { if(fake == true) { fakeChains.push(json)} else { chains.push(json) } }
 
 
 Deno.writeTextFileSync(OUTPUT, JSON.stringify(diff, null, 0))
