@@ -37,6 +37,16 @@ type noteType = {
     customData?: {}
 }
 
+type notePushType = {
+    b: number,
+    x: number,
+    y: number,
+    c: number,
+    d: number,
+    a: number,
+    customData?: {}
+}
+
 type wallType = {
     b?: number,
     x?: number,
@@ -47,10 +57,27 @@ type wallType = {
     customData?: {}
 }
 
+type wallPushType = {
+    b: number,
+    x: number,
+    y: number,
+    d: number,
+    w: number,
+    h: number,
+    customData?: {}
+}
+
 type bombType = {
     b?: number,
     x?: number,
     y?: number,
+    customData?: {}
+}
+
+type bombPushType = {
+    b: number,
+    x: number,
+    y: number,
     customData?: {}
 }
 
@@ -67,7 +94,23 @@ type arcType = {
     tc?: number,
     tmu?: number,
     m?: number,
-    customData: {}
+    customData?: {}
+}
+
+type arcPushType = {
+    b: number,
+    c: number,
+    x: number,
+    y: number,
+    d: number,
+    mu: number,
+    tb: number,
+    tx: number,
+    ty: number,
+    tc: number,
+    tmu: number,
+    m: number,
+    customData?: {}
 }
 
 type chainType = {
@@ -80,7 +123,22 @@ type chainType = {
     tx?: number,
     ty?: number,
     sc?: number,
-    s?: number
+    s?: number,
+    customData?: {}
+}
+
+type chainPushType = {
+    b: number,
+    x: number,
+    y: number,
+    c: number,
+    d: number,
+    tb: number,
+    tx: number,
+    ty: number,
+    sc: number,
+    s: number,
+    customData?: {}
 }
 
 notes.forEach(x => { if(!x.customData) x.customData = {} })
@@ -154,6 +212,11 @@ function chainsBetween(time: number, timeEnd: number, forChain: (x: chainType) =
     })
 }
 
+function note(json: notePushType) { notes.push(json) }
+function wall(json: wallPushType) { walls.push(json) }
+function bomb(json: bombPushType) { bombs.push(json) }
+function arc(json: arcPushType) { arcs.push(json) }
+function chain(json: chainPushType) { chains.push(json) }
 
 
 Deno.writeTextFileSync(OUTPUT, JSON.stringify(diff, null, 0))
