@@ -45,9 +45,9 @@ type Ease =
 type Spline = "splineCatmullRom"
 
 
-type Vec3Anim = [number, number, number, number, Ease?][]
-type Vec1Anim = [number, number, Ease?][]
-type vec5Anim = [number, number, number, number, number, Ease?][]
+type Vec3Anim = [number, number, number, number, Ease?, Spline?][]
+type Vec1Anim = [number, number, Ease?, Spline?][]
+type vec5Anim = [number, number, number, number, number, Ease?, Spline?][]
 
 type customDataType = {
     coordinates?: [],
