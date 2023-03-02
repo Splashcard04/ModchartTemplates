@@ -302,5 +302,14 @@ function bomb(fake: boolean, json: bombPushType) { if(fake == true) { fakeBombs.
 function arc(json: arcPushType) { arcs.push(json) }
 function chain(fake: boolean, json: chainPushType) { if(fake == true) { fakeChains.push(json)} else { chains.push(json) } }
 
+function r(num1: number, num2: number) {
+    if(num1 > num2) {
+        return Math.floor(Math.random() * (num1-num2)) + num2
+    } else {
+        return Math.floor(Math.random() * (num2-num1)) + num1
+    }
+}
+
+
 
 Deno.writeTextFileSync(OUTPUT, JSON.stringify(diff, null, 0))
