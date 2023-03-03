@@ -346,6 +346,20 @@ function chainsBetween(time: number, timeEnd: number, forChain: (x: chainType) =
     })
 }
 
+type geoType = "Cube" | "Cylinder" | "Capsule" | "Triangle" | "Sphere" | "Plane" | "Quad"
+
+type geoPushType = {
+    geometry: {
+        type: geoType,
+        material: materialType
+    },
+    scale: Vec3,
+    rotation: Vec3,
+    position: Vec3,
+    track: Vec3,
+    localRotation: Vec3
+}
+
 function note(fake: boolean, json: notePushType) { if(fake == true) { fakeNotes.push(json)} else { notes.push(json) } }
 function wall(fake: boolean, json: wallPushType) { if(fake == true) { fakeWalls.push(json)} else { walls.push(json)}}
 function bomb(fake: boolean, json: bombPushType) { if(fake == true) { fakeBombs.push(json)} else { bombs.push(json) } }
@@ -353,6 +367,7 @@ function arc(json: arcPushType) { arcs.push(json) }
 function chain(fake: boolean, json: chainPushType) { if(fake == true) { fakeChains.push(json)} else { chains.push(json) } }
 function environent(json: environmentType) { environentArray.push(json) }
 function material(name: string, material: materialType) { materials[name] = material }
+function geometry(json: geoPushType) { environentArray.push(json) }
 
 function r(num1: number, num2: number) {
     if(num1 > num2) {
