@@ -19,7 +19,7 @@ const bombs = diff.bombNotes;
 const arcs = diff.sliders;
 const chains = diff.burstSliders;
 const lightEvents = diff.basicBeatmapEvents;
-const environent = diff.customData.environment;
+const environentArray = diff.customData.environment;
 const fakeNotes = diff.customData.fakeColorNotes;
 const fakeWalls = diff.customData.fakeObstacles;
 const fakeBombs = diff.customData.fakeBombNotes;
@@ -203,6 +203,56 @@ type chainPushType = {
     customData?: customDataType
 }
 
+type Vec3 = [number, number, number]
+
+type environmentType = {
+    id: string,
+    lookupMethod: "Contains" | "Regex" | "Exact" | "EndsWith" | "StartsWith",
+    duplicate?: number,
+    active?: boolean,
+    scale?: Vec3,
+    position?: Vec3,
+    localPosition?: Vec3,
+    rotation?: Vec3,
+    localRotation?: Vec3,
+    track?: string,
+    componenets?: {
+        ILightWithId?: {
+            lightID?: number,
+            type: number
+        },
+        BloomFogEnvironment?: {
+            attenuation?: number,
+            offset?: number,
+            startY?: number,
+            height?: number
+        },
+        TubeBloomPrePassLight?: {
+            colorAlphaMultiplier: number,
+            bloomFogIntensityMultiplier?: number
+        }
+    }
+}
+
+type shaderType =
+    "Standard" |
+    "OpaqueLight" |
+    "InterscopeConcrete" |
+    "InterscopeCar" |
+    "TransparentLight" |
+    "BTSPillar" |
+    "Obstacle" |
+    "BaseWater" |
+    "BillieWater" |
+    "WaterfallMirror"
+
+type materialType = {
+    shader: shaderType,
+    color: [number, number, number, number],
+    track: string,
+    shaderKeywords: []
+}
+
 type customEventType =
     "AnimateTrack" | "AssignTrackParent" | "AssignPathAnimation"
 
@@ -301,6 +351,8 @@ function wall(fake: boolean, json: wallPushType) { if(fake == true) { fakeWalls.
 function bomb(fake: boolean, json: bombPushType) { if(fake == true) { fakeBombs.push(json)} else { bombs.push(json) } }
 function arc(json: arcPushType) { arcs.push(json) }
 function chain(fake: boolean, json: chainPushType) { if(fake == true) { fakeChains.push(json)} else { chains.push(json) } }
+function environent(json: environmentType) { environentArray.push(json) }
+function material(name: string, material: materialType) { materials[name] = material }
 
 function r(num1: number, num2: number) {
     if(num1 > num2) {
@@ -309,7 +361,5 @@ function r(num1: number, num2: number) {
         return Math.floor(Math.random() * (num2-num1)) + num1
     }
 }
-
-
 
 Deno.writeTextFileSync(OUTPUT, JSON.stringify(diff, null, 0))
