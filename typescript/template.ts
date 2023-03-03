@@ -377,4 +377,12 @@ function r(num1: number, num2: number) {
     }
 }
 
+function copyDataTo(outputs: string[]) {
+    outputs.forEach(x => {
+        Deno.writeTextFileSync(x, JSON.stringify(OUTPUT, null, 0))
+    })
+}
+
+
+
 Deno.writeTextFileSync(OUTPUT, JSON.stringify(diff, null, 0))
