@@ -14,7 +14,7 @@ bombs = diff.bombNotes;
 arcs = diff.sliders;
 chains = diff.burstSliders;
 lightEvents = diff.basicBeatmapEvents;
-environent = diff.customData.environment;
+environentArray = diff.customData.environment;
 fakeNotes = diff.customData.fakeColorNotes;
 fakeWalls = diff.customData.fakeObstacles;
 fakeBombs = diff.customData.fakeBombNotes;
@@ -51,6 +51,6 @@ def chain(fake, json):
     
 def environment(json): environment.insert(json)
 
-def customEvents(json): customEvents.insert(json)
+def customEvent(json): customEvents.insert(json)
 
 write.write(diff)
